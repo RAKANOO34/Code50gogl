@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Play Gift - خصم 50 جنيه</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            font-size: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .product-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-box:hover {
+            transform: scale(1.02);
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .discount-amount {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .price-info {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .features {
+            margin: 25px 0;
+            text-align: right;
+        }
+
+        .feature {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .feature:last-child {
+            border-bottom: none;
+        }
+
+        .feature strong {
+            color: #667eea;
+        }
+
+        .btn-sell {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-sell:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-sell:active {
+            transform: translateY(-1px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .info-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .success-message {
+            color: #48dbfb;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .product-box {
+                padding: 20px;
+            }
+
+            .btn-sell {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="icon">🎮</div>
+            <h1>Google Play Gift Card</h1>
+            <p class="subtitle">هذا الموقع مخصص لبيع كوبون خصم جوجل فقط</p>
+
+            <div class="product-box">
+                <div id="discount-image-container" style="margin-bottom: 20px;">
+                    <img id="discountImage" src="WhatsApp Image 2026-02-05 at 3.19.45 AM.jpeg" alt="صورة الخصم" style="width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                </div>
+                <div class="product-name">بطاقة جوجل بلاي</div>
+                <div class="discount-badge">🔥 خصم حصري</div>
+                <div class="discount-amount">50 ج.م</div>
+                <div class="price-info">يتم الشراء بسعر 50جنيه مصري</div>
+            </div>
+
+            <div class="features">
+                <div class="feature">✓ <strong>تعامل ومصدقيه 100%</strong></div>
+                <div class="feature">✓ <strong>سعر مميز وحصري</strong></div>
+                <div class="feature">✓ <strong>تسليم فوري بعد استخدام الخصم</strong></div>
+                <div class="feature">✓ <strong>مضمون وآمن تماماً</strong></div>
+            </div>
+
+            <button class="btn-sell" onclick="openModal()">💳 بيع الخصم الان</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-title">بيع الخصم</div>
+            
+            <div class="info-box">
+                <p>💬 عندما تراسل الشخص المشتري لا تنسى أن تُرسل اسكرين الخصم الخاص بك</p>
+            </div>
+
+            <div class="success-message" id="successMsg"></div>
+
+            <button class="btn-confirm" onclick="sendToWhatsApp()">📱 راسل الآن على الواتس</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+            resetForm();
+        }
+
+        function resetForm() {
+            document.getElementById("successMsg").style.display = "none";
+        }
+
+        function sendToWhatsApp() {
+            const successMsg = document.getElementById("successMsg");
+
+            successMsg.textContent = "✅ جاري فتح الواتس...";
+            successMsg.style.display = "block";
+
+            const whatsappNumber = "201157086209";
+            
+            const message = encodeURIComponent(
+                "👋 مرحباً\n\n" +
+                "🎮 اريد بيع خصم جوجل ب50جنيه\n\n" +
+                "📸 سأرسل لك اسكرين الخصم الخاص بي\n\n" +
+                "من فضلك أكمل معي العملية 🙏"
+            );
+
+            const whatsappURL = "https://wa.me/" + whatsappNumber + "?text=" + message;
+            
+            setTimeout(function() {
+                window.open(whatsappURL, '_blank');
+                successMsg.textContent = "✅ تم فتح الواتس!";
+                
+                setTimeout(function() {
+                    closeModal();
+                }, 2000);
+            }, 500);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
