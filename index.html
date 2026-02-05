@@ -347,6 +347,99 @@
                 font-size: 16px;
             }
         }
+
+        /* Video Section Styles */
+        .video-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .yes-btn, .no-btn {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .yes-btn {
+            background: white;
+            color: #667eea;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .no-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .video-display {
+            display: none;
+            margin-top: 25px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .video-display.show {
+            display: block;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 15px;
+            background: black;
+            margin-bottom: 15px;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -356,6 +449,7 @@
             <h1>Google Play Gift Card</h1>
             <p class="subtitle">هذا الموقع مخصص لبيع كوبون خصم جوجل فقط</p>
 
+            <!-- القسم الأول: بيع الخصم -->
             <div class="product-box">
                 <div id="discount-image-container" style="margin-bottom: 20px;">
                     <img id="discountImage" src="WhatsApp Image 2026-02-05 at 3.19.45 AM.jpeg" alt="صورة الخصم" style="width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
@@ -384,6 +478,23 @@
             </div>
             <button class="btn-view-gallery" onclick="openGalleryModal()">🖼️ الخصومات الي تقدر تبعها</button>
             <button class="btn-sell" onclick="openModal()">💳 بيع الخصم الان</button>
+
+            <!-- القسم الثاني: فيديو الشرح -->
+            <div class="video-section" style="margin-top: 40px;">
+                <button class="btn-sell" onclick="showVideo()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 18px;">🎥 اعرف عندك خصم ولا</button>
+
+                <div class="video-display" id="videoDisplay">
+                    <div class="video-wrapper">
+                        <video id="videoPlayer" controls>
+                            <source id="videoSource" src="" type="video/mp4">
+                            متصفحك لا يدعم عنصر الفيديو
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        📌 شاهد هذا الفيديو بعناية علشان تعرف عندك خصم ولا 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -421,14 +532,29 @@
     </div>
 
     <script>
-        // صور الخصومات - أضف هنا مسارات صورك
+        // ====== الفيديو الخاص بك ======
+        const videoURL = "WhatsApp Video 2026-02-05 at 7.34.14 PM.mp4";
+
+        function showVideo() {
+            const videoDisplay = document.getElementById('videoDisplay');
+            const videoSource = document.getElementById('videoSource');
+            
+            videoSource.src = videoURL;
+            document.getElementById('videoPlayer').load();
+            videoDisplay.classList.add('show');
+        }
+
+        function hideVideo() {
+            const videoDisplay = document.getElementById('videoDisplay');
+            videoDisplay.classList.remove('show');
+        }
+
+        // صور الخصومات
         const discountImages = [
             "WhatsApp Image 2026-02-05 at 3.19.45 AM.jpeg",
             "WhatsApp Image 2026-02-05 at 6.49.06 PM (1).jpeg",
             "WhatsApp Image 2026-02-05 at 6.49.06 PM (2).jpeg",
             "WhatsApp Image 2026-02-05 at 6.49.06 PM.jpeg"
-            // أضف أسماء الصور الإضافية هنا مثل:
-            // "صورة5.jpeg"
         ];
 
         let currentImageIndex = 0;
