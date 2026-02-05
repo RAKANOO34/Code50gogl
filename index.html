@@ -261,6 +261,74 @@
             display: none;
         }
 
+        /* Gallery Styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+
+        .gallery-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .gallery-btn {
+            background: rgba(102, 126, 234, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-btn:hover {
+            background: rgba(102, 126, 234, 1);
+            transform: scale(1.1);
+        }
+
+        .gallery-counter {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 14px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-view-gallery {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-view-gallery:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 153, 255, 0.4);
+        }
+
         @media (max-width: 480px) {
             .card {
                 padding: 25px 20px;
@@ -305,7 +373,34 @@
                 <div class="feature">✓ <strong>مضمون وآمن تماماً</strong></div>
             </div>
 
+            <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; padding: 15px; margin: 20px 0; text-align: center; color: #856404;">
+                <strong>⚠️ تنبيه مهم:</strong><br>
+             الخصومات 20% و50%  مبيتبعوش حاليا
+            </div>
+            <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 12px; padding: 15px; margin: 20px 0; text-align: center; color: white;">
+                <strong>🎉 عرض خاص:</strong><br>
+               لو معاك خصمين هخدهم منك ب110 بدل من100جنيه 
+                                   عرض لفتره محدوده
+            </div>
+            <button class="btn-view-gallery" onclick="openGalleryModal()">🖼️ الخصومات الي تقدر تبعها</button>
             <button class="btn-sell" onclick="openModal()">💳 بيع الخصم الان</button>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGalleryModal()">&times;</span>
+            <div class="modal-title">صور الخصومات</div>
+            
+            <div class="gallery-container">
+                <img id="galleryImage" class="gallery-image" src="" alt="صورة الخصم">
+                <div class="gallery-nav">
+                    <button class="gallery-btn" onclick="prevImage()">❮</button>
+                    <span class="gallery-counter"><span id="currentImage">1</span> / <span id="totalImages">1</span></span>
+                    <button class="gallery-btn" onclick="nextImage()">❯</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -326,6 +421,45 @@
     </div>
 
     <script>
+        // صور الخصومات - أضف هنا مسارات صورك
+        const discountImages = [
+            "WhatsApp Image 2026-02-05 at 3.19.45 AM.jpeg",
+            "WhatsApp Image 2026-02-05 at 6.49.06 PM (1).jpeg",
+            "WhatsApp Image 2026-02-05 at 6.49.06 PM (2).jpeg",
+            "WhatsApp Image 2026-02-05 at 6.49.06 PM.jpeg"
+            // أضف أسماء الصور الإضافية هنا مثل:
+            // "صورة5.jpeg"
+        ];
+
+        let currentImageIndex = 0;
+
+        function openGalleryModal() {
+            document.getElementById("galleryModal").style.display = "block";
+            loadGalleryImages();
+        }
+
+        function closeGalleryModal() {
+            document.getElementById("galleryModal").style.display = "none";
+        }
+
+        function loadGalleryImages() {
+            if (discountImages.length > 0) {
+                document.getElementById("galleryImage").src = discountImages[currentImageIndex];
+                document.getElementById("currentImage").textContent = currentImageIndex + 1;
+                document.getElementById("totalImages").textContent = discountImages.length;
+            }
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % discountImages.length;
+            loadGalleryImages();
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + discountImages.length) % discountImages.length;
+            loadGalleryImages();
+        }
+
         function openModal() {
             document.getElementById("modal").style.display = "block";
         }
@@ -368,8 +502,12 @@
 
         window.onclick = function(event) {
             const modal = document.getElementById("modal");
+            const galleryModal = document.getElementById("galleryModal");
             if (event.target == modal) {
                 closeModal();
+            }
+            if (event.target == galleryModal) {
+                closeGalleryModal();
             }
         }
     </script>
