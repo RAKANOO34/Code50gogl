@@ -440,6 +440,47 @@
             font-size: 14px;
             line-height: 1.6;
         }
+
+        /* Countdown Timer Styles */
+        .countdown-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 8px;
+            padding: 12px 8px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: 24px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .countdown-label-small {
+            font-size: 11px;
+            margin-top: 5px;
+            opacity: 0.85;
+        }
     </style>
 </head>
 <body>
@@ -475,6 +516,32 @@
                 <strong>🎉 عرض خاص:</strong><br>
                لو معاك خصمين هخدهم منك ب110 بدل من100جنيه 
                                    عرض لفتره محدوده
+                
+                <div class="countdown-container">
+                    <div class="countdown-label">⏱️ العرض ينتهي في:</div>
+                    <div class="countdown-display">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">0</span>
+                            <span class="countdown-label-small">أيام</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">0</span>
+                            <span class="countdown-label-small">ساعات</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">0</span>
+                            <span class="countdown-label-small">دقائق</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds">0</span>
+                            <span class="countdown-label-small">ثواني</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-confirm" onclick="sendSpecialOfferToWhatsApp()" style="background: white; color: #28a745; margin-top: 15px; font-weight: bold;">
+                    💬 الاستفادة من العرض
+                </button>
             </div>
             <!-- قسم البحث السريع -->
             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; margin: 20px 0; color: white;">
@@ -559,6 +626,50 @@
     </div>
 
     <script>
+        // ====== العداد التنازلي ======
+        function initCountdown() {
+            // توقيت نهاية العرض (بعد 3 أيام من اليوم)
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 3);
+            endDate.setHours(23, 59, 59);
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = endDate.getTime() - now;
+
+                if (timeLeft > 0) {
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').textContent = days;
+                    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                } else {
+                    // انتهت صلاحية العرض
+                    document.getElementById('days').textContent = '0';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                }
+            }
+
+            // تحديث أول مرة مباشرة
+            updateCountdown();
+
+            // تحديث كل ثانية
+            setInterval(updateCountdown, 1000);
+        }
+
+        // بدء العداد عند تحميل الصفحة
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCountdown);
+        } else {
+            initCountdown();
+        }
+
         // ====== الفيديو الخاص بك ======
         const videoURL = "WhatsApp Video 2026-02-05 at 7.34.14 PM.mp4";
 
@@ -651,6 +762,20 @@
                     closeModal();
                 }, 2000);
             }, 500);
+        }
+
+        // ====== دالة الاستفادة من العرض ======
+        function sendSpecialOfferToWhatsApp() {
+            const whatsappNumber = "201157086209";
+            
+            const message = encodeURIComponent(
+                "👋 مرحباً\n\n" +
+                "🎉 اريد الاستفاده من العرض\n\n" +
+                "لو معاك خصمين هخديهم ب110 بدل من 100 جنيه"
+            );
+
+            const whatsappURL = "https://wa.me/" + whatsappNumber + "?text=" + message;
+            window.open(whatsappURL, '_blank');
         }
 
         window.onclick = function(event) {
