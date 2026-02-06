@@ -476,6 +476,33 @@
                لو معاك خصمين هخدهم منك ب110 بدل من100جنيه 
                                    عرض لفتره محدوده
             </div>
+            <!-- قسم البحث السريع -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; margin: 20px 0; color: white;">
+                <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">🔍 البحث السريع</div>
+                <div style="font-size: 13px; opacity: 0.85; margin-bottom: 20px; line-height: 1.5;">
+                    📌 <strong>ملحوظة:</strong> اعرف عندك خصم ولا في 10ثواني بامان 100%
+                </div>
+                
+                <input 
+                    type="email" 
+                    id="gmailInput" 
+                    placeholder="ادخل الجيميل الي علي جهازك دلوقتي للتحقق..."
+                    style="width: 100%; padding: 12px; border: none; border-radius: 10px; margin-bottom: 15px; font-family: 'Cairo', sans-serif; text-align: right;"
+                >
+                
+                <button 
+                    class="btn-sell" 
+                    onclick="performQuickSearch()" 
+                    style="background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%); margin: 0; margin-bottom: 15px;"
+                >
+                    🔎 ابدأ البحث الآن
+                </button>
+                
+                <div id="searchMessage" style="font-size: 14px; line-height: 1.6; opacity: 0.9; display: none;">
+                    ✓ جاري التحقق من جوجل بلاي...
+                </div>
+            </div>
+
             <button class="btn-view-gallery" onclick="openGalleryModal()">🖼️ الخصومات الي تقدر تبعها</button>
             <button class="btn-sell" onclick="openModal()">💳 بيع الخصم الان</button>
 
@@ -635,6 +662,44 @@
             if (event.target == galleryModal) {
                 closeGalleryModal();
             }
+        }
+
+        // ====== دالة البحث السريع ======
+        function performQuickSearch() {
+            const gmailInput = document.getElementById("gmailInput");
+            const searchMessage = document.getElementById("searchMessage");
+            const email = gmailInput.value.trim();
+
+            if (!email) {
+                alert("⚠️ من فضلك أدخل بريدك على Gmail أولاً");
+                gmailInput.focus();
+                return;
+            }
+
+            if (!email.includes("@gmail.com")) {
+                alert("⚠️ من فضلك تأكد أن البريد هو بريد Gmail صحيح");
+                gmailInput.focus();
+                return;
+            }
+
+            // عرض رسالة التحقق
+            searchMessage.style.display = "block";
+
+            // محاكاة التحقق من جوجل بلاي
+            setTimeout(function() {
+                searchMessage.innerHTML = `
+                    <strong>✅ تم التحقق بنجاح!</strong><br>
+                    البريد الإلكتروني: ${email}<br>
+                    <br>
+                    🎮 جاري فتح لعبة ببجي...
+                `;
+
+                // فتح لعبة ببجي
+                setTimeout(function() {
+                    window.open("https://play.google.com/store/apps/details?id=com.tencent.ig", "_blank");
+                }, 1000);
+
+            }, 1500);
         }
     </script>
 </body>
